@@ -41,7 +41,7 @@ class MustBeProperlyInsidePolygonsPointRule(AbstractTopologyRule):
                         feature2 = featureReference.getFeature()
                         polygon2 = feature2.getDefaultGeometry()
                         if polygon2.getGeometryType().getName() == "Polygon2D":
-                            if buffer1.intersects( polygon2 ):
+                            if polygon2.contains( buffer1 ): #if buffer1.intersects( polygon2 ):
                                 contains = True
                                 break
                         else:
@@ -49,7 +49,7 @@ class MustBeProperlyInsidePolygonsPointRule(AbstractTopologyRule):
                                 n2 = polygon2.getPrimitivesNumber()
                                 for i in range(0, n2 + 1):
                                     surface2 = polygon2.getSurfaceAt(i)
-                                    if buffer1.intersects( surface2 ):
+                                    if surface2.contains( buffer1 ):#if buffer1.intersects( surface2 ):
                                         contains = True
                                         break
                     if not contains:
@@ -73,7 +73,7 @@ class MustBeProperlyInsidePolygonsPointRule(AbstractTopologyRule):
                                 feature2 = featureReference.getFeature()
                                 polygon2 = feature2.getDefaultGeometry()
                                 if polygon2.getGeometryType().getName() == "Polygon2D":
-                                    if buffer1.intersects( polygon2 ):
+                                    if polygon2.contains( buffer1 ): #if buffer1.intersects( polygon2 ):
                                         contains = True
                                         break
                                 else:
@@ -81,7 +81,7 @@ class MustBeProperlyInsidePolygonsPointRule(AbstractTopologyRule):
                                         n2 = polygon2.getPrimitivesNumber()
                                         for j in range(0, n2 + 1):
                                             surface2 = polygon2.getSurfaceAt(j)
-                                            if buffer1.intersects( surface2 ):
+                                            if surface2.contains( buffer1 ): #if buffer1.intersects( surface2 ):
                                                 contains = True
                                                 break
                             if not contains:

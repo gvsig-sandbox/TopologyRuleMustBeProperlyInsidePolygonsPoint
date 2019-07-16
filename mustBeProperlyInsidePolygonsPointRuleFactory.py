@@ -22,7 +22,7 @@ class MustBeProperlyInsidePolygonsPointRuleFactory(AbstractTopologyRuleFactory):
             "Must Be Properly Inside Polygons Point Rule",
             "This rule requires that",
             ListBuilder().add(Geometry.TYPES.POINT).add(Geometry.TYPES.MULTIPOINT).asList(),
-            ListBuilder().add(Geometry.TYPES.POLYGON).add(Geometry.TYPES.POLYGON).asList()
+            ListBuilder().add(Geometry.TYPES.SURFACE).add(Geometry.TYPES.MULTISURFACE).asList()
         )
     
     def createRule(self, plan, dataSet1, dataSet2, tolerance):
