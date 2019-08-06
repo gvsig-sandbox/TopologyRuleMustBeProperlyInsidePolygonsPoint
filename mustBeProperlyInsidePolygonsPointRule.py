@@ -29,7 +29,7 @@ class MustBeProperlyInsidePolygonsPointRule(AbstractTopologyRule):
             for featureReference in theDataSet2.query(buffer1):
                 feature2 = featureReference.getFeature()
                 polygon2 = feature2.getDefaultGeometry()
-                if polygon2.contains( buffer1 ): #if buffer1.intersects( polygon2 ):
+                if polygon2.intersects( buffer1 ): #contains
                     result = True
                     break
         else:
@@ -75,7 +75,7 @@ class MustBeProperlyInsidePolygonsPointRule(AbstractTopologyRule):
                             -1,
                             -1,
                             False,
-                            "The point is not contained by polygon.",
+                            "The point is not contained by the polygon.",
                             ""
                         )
                 else:
@@ -94,7 +94,7 @@ class MustBeProperlyInsidePolygonsPointRule(AbstractTopologyRule):
                                     i,
                                     -1,
                                     False,
-                                    "The multipoint is not contained by polygon.",
+                                    "The multipoint is not contained by the polygon.",
                                     ""
                                 )
             else:
