@@ -10,7 +10,7 @@ class DeletePointAction(AbstractTopologyRuleAction):
     def __init__(self):
         AbstractTopologyRuleAction.__init__(
             self,
-			"mustBeProperlyInsidePolygonsPoint",
+	    "mustBeProperlyInsidePolygonsPoint",
             "DeletePointAction",
             "Delete Point Action",
             "Points that are not covered by the polygon must be deleted. The delete action removes point entities that are not properly within polygon entities."
