@@ -20,7 +20,7 @@ class MustBeProperlyInsidePolygonsPointRuleFactory(AbstractTopologyRuleFactory):
             self,
             "MustBeProperlyInsidePolygonsPoint",
             "Must Be Properly Inside Polygons Point Rule",
-            "This rule requires that",
+            "This rule requires that the points must fall within the area, not on the boundary. So points errors are created on the points that are not inside the polygon.",
             ListBuilder().add(Geometry.TYPES.POINT).add(Geometry.TYPES.MULTIPOINT).asList(),
             ListBuilder().add(Geometry.TYPES.SURFACE).add(Geometry.TYPES.MULTISURFACE).asList()
         )
