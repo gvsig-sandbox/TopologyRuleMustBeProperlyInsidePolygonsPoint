@@ -23,13 +23,13 @@ class MustBeProperlyInsidePolygonsPointRule(AbstractTopologyRule):
         AbstractTopologyRule.__init__(self, plan, factory, tolerance, dataSet1, dataSet2)
         self.addAction(DeletePointAction())
     
-    def intersects(self, buffer1, theDataSet2):
+    def contains(self, buffer1, theDataSet2):
+        result = False
         if theDataSet2.getSpatialIndex() != None:
-            result = False
             for featureReference in theDataSet2.query(buffer1):
                 feature2 = featureReference.getFeature()
                 polygon2 = feature2.getDefaultGeometry()
-                if polygon2.intersects( buffer1 ): #contains
+                if polygon2.contains( buffer1 ):
                     result = True
                     break
         else:
@@ -43,15 +43,13 @@ class MustBeProperlyInsidePolygonsPointRule(AbstractTopologyRule):
                 self.expressionBuilder.ifnull(
                     self.expressionBuilder.column(self.geomName),
                     self.expressionBuilder.constant(False),
-                    self.expressionBuilder.ST_Intersects(
+                    self.expressionBuilder.ST_Contains(
                         self.expressionBuilder.geometry(buffer1),
                         self.expressionBuilder.column(self.geomName)
                     )
                 ).toString()
             )
             if theDataSet2.findFirst(self.expression) == None:
-                result = False
-            else:
                 result = True
         return result
     
@@ -64,7 +62,7 @@ class MustBeProperlyInsidePolygonsPointRule(AbstractTopologyRule):
             if geometryType1.getSubType() == geom.D2 or geometryType1.getSubType() == geom.D2M:
                 if geometryType1.getType() == geom.POINT:
                     buffer1 = point1.buffer(tolerance1)
-                    if not self.intersects(buffer1, theDataSet2):
+                    if not self.contains(buffer1, theDataSet2):
                         report.addLine(self,
                             self.getDataSet1(),
                             self.getDataSet2(),
@@ -83,7 +81,7 @@ class MustBeProperlyInsidePolygonsPointRule(AbstractTopologyRule):
                         n1 = point1.getPrimitivesNumber()
                         for i in range(0, n1 + 1):
                             buffer1 = point1.getPointAt(i).buffer(tolerance1)
-                            if not self.intersects(buffer1, theDataSet2):
+                            if not self.contains(buffer1, theDataSet2):
                                 report.addLine(self,
                                     self.getDataSet1(),
                                     self.getDataSet2(),
